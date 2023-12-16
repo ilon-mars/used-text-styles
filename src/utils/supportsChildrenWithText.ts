@@ -1,5 +1,5 @@
 export const supportsChildrenWithText = (
-  node: SceneNode
+  node: SceneNode,
 ): node is FrameNode | ComponentNode | InstanceNode => {
   return (
     node.type === 'FRAME' ||

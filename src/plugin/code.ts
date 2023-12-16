@@ -1,66 +1,61 @@
-// import { SCROLL_TO } from "../utils";
-// import { getLineHeight, supportsChildrenWithText, updateSelection } from "../utils";
+import { MessageTypeEnum } from '@/enums';
+import { TextStyleType } from '@/types';
+import { getLineHeight, supportsChildrenWithText, updateSelection } from '@/utils';
 
-// const showPluginWindow = () => {
-//   const selection = figma.currentPage.selection[0];
+let lastSelectedNode: SceneNode;
 
-//   if (!selection) {
-//     figma.notify('Select frame or group', {
-//       timeout: 5000,
-//     });
-//     return;
-//   }
+const uiHandler = () => {
+  const selection = figma.currentPage.selection[0];
 
-//   if (!supportsChildrenWithText(selection)) {
-//     return;
-//   }
+  if (!selection) {
+    figma.notify('Select frame or group', {
+      timeout: 5000,
+    });
+    return;
+  }
 
-//   lastSelectedNode = selection;
+  if (!supportsChildrenWithText(selection)) {
+    return;
+  }
 
-//   const stylesList = selection
-//     .findAll(node => node.type === 'TEXT')
-//     .map(textNode => {
-//       const element = textNode as TextNode;
-//       let name: string;
+  lastSelectedNode = selection;
 
-//       const fontSize = `${element.fontSize.toString()}px`;
-//       const lineHeight = getLineHeight(element.lineHeight as LineHeight);
+  const stylesList: TextStyleType[] = selection
+    .findAll((node) => node.type === 'TEXT')
+    .map((textNode) => {
+      const element = textNode as TextNode;
 
-//       if (element.textStyleId) {
-//         name =
-//           figma
-//             .getLocalTextStyles()
-//             .find(style => style.id === element.textStyleId).name || '';
-//       } else {
-//         name = `(-${(element.fontName as FontName).family}-)`;
-//       }
+      const styles = {
+        id: element.id,
+        fontSize: `${element.fontSize.toString()}px`,
+        lineHeight: getLineHeight(element.lineHeight as LineHeight),
+      };
 
-//       return {
-//         id: element.id,
-//         name,
-//         fontSize,
-//         lineHeight,
-//       };
-//     });
+      if (element.textStyleId) {
+        const elementWithId = figma
+          .getLocalTextStyles()
+          .find((style) => style.id === element.textStyleId)!;
 
-//   figma.ui.postMessage({ type: 'selectedElement', stylesList });
-// };
+        return Object.assign(styles, { name: elementWithId.name });
+      } else {
+        return Object.assign(styles, { fontName: `(-${(element.fontName as FontName).family}-)` });
+      }
+    });
 
-// figma.showUI(__html__, { themeColors: true, width: 320, height: 480 });
+  figma.ui.postMessage({ type: MessageTypeEnum.SELECTED_ELEMENT, stylesList });
+};
 
-// let lastSelectedNode: SceneNode;
+figma.showUI(__html__, { themeColors: true, width: 320, height: 480 });
 
-// showPluginWindow();
+uiHandler();
 
-// figma.on('selectionchange', () => showPluginWindow());
-// figma.on('documentchange', () => {
-//   updateSelection(figma.currentPage, lastSelectedNode);
-// });
+figma.on('selectionchange', () => uiHandler());
+figma.on('documentchange', () => updateSelection(figma.currentPage, lastSelectedNode));
 
-// figma.ui.onmessage = message => {
-//   if (message.type === SCROLL_TO) {
-//     const el = figma.currentPage.findOne(el => el.id === message.id)!;
-//     figma.viewport.scrollAndZoomIntoView([el]);
-//     updateSelection(figma.currentPage, el);
-//   }
-// };
+figma.ui.onmessage = (message) => {
+  if (message.type === MessageTypeEnum.SCROLL_TO) {
+    const el = figma.currentPage.findOne((el) => el.id === message.id)!;
+    figma.viewport.scrollAndZoomIntoView([el]);
+    updateSelection(figma.currentPage, el);
+  }
+};
