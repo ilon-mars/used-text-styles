@@ -28,6 +28,7 @@ const uiHandler = () => {
       const styles = {
         id: element.id,
         fontSize: `${element.fontSize.toString()}px`,
+        fontWeight: parseInt(element.fontWeight.toString()),
         lineHeight: getLineHeight(element.lineHeight as LineHeight),
       };
 
@@ -38,7 +39,7 @@ const uiHandler = () => {
 
         return Object.assign(styles, { name: elementWithId.name });
       } else {
-        return Object.assign(styles, { fontName: `(-${(element.fontName as FontName).family}-)` });
+        return Object.assign(styles, { fontName: `${(element.fontName as FontName).family}` });
       }
     });
 
@@ -49,8 +50,26 @@ figma.showUI(__html__, { themeColors: true, width: 320, height: 480 });
 
 uiHandler();
 
-figma.on('selectionchange', () => uiHandler());
-figma.on('documentchange', () => updateSelection(figma.currentPage, lastSelectedNode));
+figma.on('selectionchange', () => {
+  if (!figma.currentPage.selection[0]) {
+    figma.ui.postMessage({ type: MessageTypeEnum.SELECTED_ELEMENT, stylesList: [] });
+  }
+
+  uiHandler();
+});
+
+figma.on('documentchange', (event) => {
+  const docChangeEvent = event.documentChanges[0];
+  if (docChangeEvent.type !== 'PROPERTY_CHANGE') {
+    return;
+  }
+
+  if (!docChangeEvent.properties.includes('textStyleId')) {
+    return;
+  }
+
+  updateSelection(figma.currentPage, lastSelectedNode);
+});
 
 figma.ui.onmessage = (message) => {
   if (message.type === MessageTypeEnum.SCROLL_TO) {

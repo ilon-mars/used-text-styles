@@ -5,49 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UsedTextStyles plugin</title>
-  <style>
-    * {
-      font-family: 'Inter', 'Helvetica', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--figma-color-bg);
-      color: var(--figma-color-text);
-      padding: 20px;
-      min-height: 600px;
-    }
-
-    #styles {
-      display: none;
-      list-style: none;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    li {
-      display: flex;
-      align-items: flex-end;
-      gap: 10px;
-      font-size: 16px;
-      line-height: 20px;
-
-      &::before {
-        content: '🧊';
-      }
-    }
-
-    span:last-of-type {
-      font-size: 14px;
-      line-height: 18px;
-      opacity: 0.5;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <p id="instruction">Select frame</p>
+  <p id="instruction">Select frame or group</p>
   <ul id="styles"></ul>
   <script type="module" src="./index.ts" defer></script>
 </body>

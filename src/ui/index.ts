@@ -20,8 +20,13 @@ window.onmessage = async (event) => {
   const message = event.data.pluginMessage;
 
   if (message.type === MessageTypeEnum.SELECTED_ELEMENT) {
-    createStylesList(message.stylesList);
+    if (message.stylesList.length > 0) {
+      createStylesList(message.stylesList);
 
-    document.body.addEventListener('click', addListener);
+      document.body.addEventListener('click', addListener);
+    } else {
+      document.getElementById('instruction')!.style.display = 'block';
+      document.getElementById('styles')!.textContent = '';
+    }
   }
 };

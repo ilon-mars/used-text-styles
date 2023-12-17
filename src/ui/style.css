@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--figma-color-bg);
+  color: var(--figma-color-text);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+#instruction {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  color: var(--figma-color-text-brand);
+}
+
+#styles {
+  display: none;
+  list-style: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}

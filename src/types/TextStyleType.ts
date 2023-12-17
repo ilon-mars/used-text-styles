@@ -1,6 +1,7 @@
 export type BaseText = {
   id: string;
   fontSize: string;
+  fontWeight: number;
   lineHeight: string;
 };
 

@@ -9,6 +9,7 @@ export default defineConfig({
   plugins: [eslint(), viteSingleFile()],
 
   build: {
+    minify: true,
     target: 'esnext',
     assetsInlineLimit: 100000000,
     chunkSizeWarningLimit: 100000000,
@@ -25,6 +26,12 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
+    },
+  },
+
+  css: {
+    modules: {
+      localsConvention: 'camelCase',
     },
   },
 });

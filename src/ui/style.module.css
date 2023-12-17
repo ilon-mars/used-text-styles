@@ -1,0 +1,52 @@
+.name {
+  max-width: 150px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.withoutStyle {
+  font-weight: 500;
+  color: var(--figma-color-text-brand);
+}
+
+.sizes {
+  font-size: 12px;
+  line-height: 16px;
+  max-width: 70px;
+  color: var(--figma-color-text-secondary);
+}
+
+.button {
+  margin-left: auto;
+  border: 1px solid transparent;
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  color: inherit;
+  font-size: 14px;
+  line-height: 18px;
+  cursor: pointer;
+
+  &::before {
+    content: 'Ag';
+    max-width: 20px;
+    font-weight: var(--font-weight, 400);
+    color: var(--figma-color-text-tertiary);
+  }
+
+  &:hover {
+    border-color: var(--figma-color-border);
+  }
+
+  & svg {
+    width: 30px;
+    height: 100%;
+    aspect-ratio: 1;
+    fill: currentColor;
+    margin-left: auto;
+  }
+}

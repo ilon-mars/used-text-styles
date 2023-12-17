@@ -7,6 +7,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'es6',
+    sourceType: 'module',
   },
   rules: {
     'no-console': 'warn',
@@ -15,5 +16,8 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': ['off'],
     'class-methods-use-this': 'off',
     'global-require': 0,
+  },
+  env: {
+    node: true,
   },
 };
