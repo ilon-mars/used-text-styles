@@ -14,6 +14,11 @@ const uiHandler = () => {
     return;
   }
 
+  if (figma.currentPage.selection.length > 1) {
+    figma.notify('Please, select only one node');
+    return;
+  }
+
   if (!supportsChildrenWithText(selection)) {
     return;
   }
