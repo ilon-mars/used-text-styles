@@ -22,6 +22,12 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   color: var(--figma-color-text-brand);
+  display: flex;
+  flex-direction: column;
+
+  & span:last-of-type {
+    color: var(--figma-color-text-secondary);
+  }
 }
 
 #styles {

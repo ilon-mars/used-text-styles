@@ -25,7 +25,7 @@ window.onmessage = async (event) => {
 
       document.body.addEventListener('click', addListener);
     } else {
-      document.getElementById('instruction')!.style.display = 'block';
+      document.getElementById('instruction')!.style.display = 'flex';
       document.getElementById('styles')!.textContent = '';
     }
   }

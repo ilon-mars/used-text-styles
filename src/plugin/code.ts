@@ -8,7 +8,7 @@ const uiHandler = () => {
   const selection = figma.currentPage.selection[0];
 
   if (!selection) {
-    figma.notify('Select frame or group', {
+    figma.notify('Select node to inspect', {
       timeout: 5000,
     });
     return;
@@ -27,7 +27,7 @@ const uiHandler = () => {
 
       const styles = {
         id: element.id,
-        fontSize: `${element.fontSize.toString()}px`,
+        fontSize: `${parseInt(element.fontSize.toString())}px`,
         fontWeight: parseInt(element.fontWeight.toString()),
         lineHeight: getLineHeight(element.lineHeight as LineHeight),
       };
