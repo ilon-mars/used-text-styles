@@ -3,7 +3,12 @@ import { TextStyleType } from '@/types';
 import { addListener, createListElement } from '@/utils';
 
 const createStylesList = (stylesArr: TextStyleType[]) => {
-  const listElement = document.getElementById('styles')!;
+  const listElement = document.getElementById('styles');
+
+  if (!listElement) {
+    return;
+  }
+
   listElement.textContent = '';
 
   const elements = stylesArr.reduce((acc, current) => {

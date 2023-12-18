@@ -73,7 +73,12 @@ figma.on('documentchange', (event) => {
 
 figma.ui.onmessage = (message) => {
   if (message.type === MessageTypeEnum.SCROLL_TO) {
-    const el = figma.currentPage.findOne((el) => el.id === message.id)!;
+    const el = figma.currentPage.findOne((el) => el.id === message.id);
+
+    if (!el) {
+      return;
+    }
+
     figma.viewport.scrollAndZoomIntoView([el]);
     updateSelection(figma.currentPage, el);
   }

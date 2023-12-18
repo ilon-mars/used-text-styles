@@ -12,7 +12,13 @@ export const addListener = (event: Event) => {
   }
 
   if (target.closest('[data-id]')) {
-    const id = (target.closest('[data-id]') as HTMLElement)!.dataset.id || '';
+    const button = target.closest('[data-id]') as HTMLElement;
+
+    if (!button) {
+      return;
+    }
+
+    const id = button.dataset.id || '';
     postMessage(id);
   }
 };
