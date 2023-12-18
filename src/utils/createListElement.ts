@@ -1,6 +1,6 @@
 import { TextStyleType } from '@/types';
 import { hasTextStyle } from './hasTextStyle';
-import styles from '@/ui/style.module.css';
+import styles from '@/ui/list.module.css';
 
 const targetIcon = `
   <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">

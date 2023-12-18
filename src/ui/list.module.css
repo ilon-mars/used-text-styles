@@ -30,6 +30,7 @@
   font-size: 14px;
   line-height: 18px;
   cursor: pointer;
+  transition: border-color 150ms ease-in;
 
   &::before {
     content: 'Ag';
