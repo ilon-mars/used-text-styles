@@ -65,16 +65,17 @@ figma.on('selectionchange', () => {
 
 figma.on('documentchange', (event) => {
   const docChangeEvent = event.documentChanges[0];
-  if (docChangeEvent.type !== 'PROPERTY_CHANGE') {
-    return;
-  }
-
-  if (!docChangeEvent.properties.includes('textStyleId')) {
+  if (
+    docChangeEvent.type !== 'PROPERTY_CHANGE' ||
+    docChangeEvent.properties.includes('textStyleId')
+  ) {
     return;
   }
 
   updateSelection(figma.currentPage, lastSelectedNode);
 });
+
+// currentpagechange
 
 figma.ui.onmessage = (message) => {
   if (message.type === MessageTypeEnum.SCROLL_TO) {
