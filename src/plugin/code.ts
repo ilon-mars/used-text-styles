@@ -75,7 +75,7 @@ figma.on('documentchange', (event) => {
   updateSelection(figma.currentPage, lastSelectedNode);
 });
 
-// currentpagechange
+figma.on('currentpagechange', uiHandler);
 
 figma.ui.onmessage = (message) => {
   if (message.type === MessageTypeEnum.SCROLL_TO) {
