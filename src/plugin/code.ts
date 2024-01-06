@@ -37,12 +37,32 @@ const uiHandler = () => {
         lineHeight: getLineHeight(element.lineHeight as LineHeight),
       };
 
-      if (element.textStyleId) {
+      if (element.removed) {
+        figma.notify('This node has been removed', {
+          timeout: 3000,
+        });
+        figma.ui.close();
+      }
+
+      if (element.textStyleId && typeof element.textStyleId === 'string') {
         const elementWithId = figma
           .getLocalTextStyles()
           .find((style) => style.id === element.textStyleId)!;
 
         return Object.assign(styles, { name: elementWithId.name });
+      } else if (typeof element.fontName === typeof figma.mixed) {
+        const elementFontName = element
+          .getStyledTextSegments(['fontName'])
+          .map((font) => font.fontName.family)
+          .join('/');
+
+        return {
+          id: element.id,
+          fontSize: '??',
+          fontWeight: 0,
+          lineHeight: '??',
+          fontName: elementFontName,
+        };
       } else {
         return Object.assign(styles, { fontName: `${(element.fontName as FontName).family}` });
       }
@@ -65,10 +85,17 @@ figma.on('selectionchange', () => {
 
 figma.on('documentchange', (event) => {
   const docChangeEvent = event.documentChanges[0];
-  if (
-    docChangeEvent.type !== 'PROPERTY_CHANGE' ||
-    docChangeEvent.properties.includes('textStyleId')
-  ) {
+
+  const hasPropertyChanged =
+    docChangeEvent.type === 'PROPERTY_CHANGE' &&
+    (docChangeEvent.properties.every((p) => ['fontName', 'textStyleId'].indexOf(p) > -1) ||
+      docChangeEvent.properties.includes('textStyleId'));
+
+  const hasNewStyleCreated =
+    event.documentChanges[0].type === 'STYLE_PROPERTY_CHANGE' &&
+    event.documentChanges[1].type === 'STYLE_CREATE';
+
+  if (!(hasPropertyChanged || hasNewStyleCreated)) {
     return;
   }
 
