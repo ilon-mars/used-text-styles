@@ -2,10 +2,18 @@
 
 Figma plugin for text styles management.
 
-You can:
+## What plugin does
+- shows font name, if text node has't style
+- shows font names for mixed fonts
+- shows font size and line-height, ?? for mixed fonts
+- allows to bind style
+- allows to unbind style
 
-1. Inspect node's text styles
-2. Link styles to text without them
-3. Inspect text element and unbind style
+## How to use it
+1. Run the plugin
+2. Select node with text (frame, component or group)
+3. Manage your styles: if text node has linked style, plugin shows style's name, else plugin shows font name
+4. By clicking the style you can scroll to the element to bind or unbind style or change font properties
 
-![preview](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHVsNDM0YmF5NXhnNW1tMDBlcHdkOGRpZjVjcjVubXJsbWR3em85dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2xE5R3kt1edu5McDhb/giphy.gif)
+https://github.com/ilon-mars/used-text-styles/assets/72467978/a0610f0e-c3c4-4834-a79f-98145fe893ad
+
